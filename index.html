@@ -39,7 +39,6 @@
       border-radius: calc(12vw/19.2);
       margin: calc(-10vw/19.2) 0 calc(20vw/19.2) 0;
       border: calc(2vw/19.2) solid #3B77A7;
-      /* background-color: #96C0DD; */
       background-image: linear-gradient(27deg, #5D9FFF 0%, #B8DCFF 48%, #6BBBFF 100%);
     }
     .card-title {
@@ -65,7 +64,7 @@
       width: 100%;
       left: 0;
       top: 0;
-      border-radius: 0px 0px calc(12vw/19.2) calc(12vw/19.2);
+      border-radius: 0px 0px 7px 7px;
 
     }
     .slot-machine{
@@ -92,10 +91,6 @@
     }
     .disable {
       display: none;
-    }
-    .btn {
-      line-height: 2.2;
-      border-radius: 0px 0px 7px 7px;
     }
     .multipleTransform.hand{
       border-radius: 0px 0px 12px 12px;
@@ -272,12 +267,14 @@
       background-color: #EDE9F2;
     }
     .btn {
-      background-color: #3B77A7;
+      background-image: linear-gradient(120deg, #3e6ebc 0%, #4286f4 100%);
       color: white;
       width: 100%;
       text-align: center;
       height: 100%;
       font-size: calc(16vw/19.2);
+      line-height: 2.2;
+      border-radius: 0px 0px 7px 7px;
     }
     input {
       border-radius: 5px;
@@ -285,6 +282,28 @@
     }
     .winnerNamesForm {
       border-radius: 20px;
+    }
+    .filter-close {
+      background-image: none;
+      background-color: transparent; color: #000; width: 100%; border-radius: 0px;
+    }
+    .filter-open {
+      background-image: none;
+      background-color: #6894C5; color: #000; border-radius: 0px;
+    }
+    .deleteBtn {
+      background-image: linear-gradient(120deg, #3e6ebc 0%, #417ddf 100%);
+      border-radius: 0px 0px 0px 7px;
+    }
+    .winnerCopy {
+      background-image: linear-gradient(120deg, #417ddf 0%, #4286f4 100%);
+      border-radius: 0px 0px 7px 0px;
+      border-left: 0.1px;
+    }
+    .drawAmount {
+      background-image: none;
+      background-color: transparent;
+      color: #000;
     }
   </style>
 </head>
@@ -352,20 +371,20 @@
         z-index: -99;" ></textarea>
         <div class="btn-group" role="group" aria-label="Basic outlined example">
           <div class="col-6">
-            <button type="button" class="copy btn multipleTransformBtn" style="background-color: #96C0DD; color: #000;" disabled>當前獎項已中獎數: <span class="draw-Amount">0</span></button>
+            <button type="button" class="copy btn multipleTransformBtn drawAmount">當前獎項已中獎數: <span class="draw-Amount">0</span></button>
           </div>
           <div class="col-6">
             <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off" checked>
-            <label class="btn filter-close disable" style="background-color: #96C0DD; color: #000; width: 100%; border-radius: 0px;" for="btncheck1">點我自動過濾</label>
-            <label class="btn filter-open" style="background-color: #6894C5; color: #000; border-radius: 0px;" for="btncheck1">正在自動過濾!</label>
+            <label class="btn filter-close disable" for="btncheck1">點我自動過濾</label>
+            <label class="btn filter-open" for="btncheck1">正在自動過濾!</label>
           </div>
         </div>
         <div class="btn-group" role="group" aria-label="Basic outlined example">
           <div class="col-6">
-            <button type="button" class="copy btn multipleTransformBtn deleteBtn" style="border-radius: 0px 0px 0px 7px" onclick="deleteWinnerInList()">將中獎者從抽獎名單刪除</button>
+            <button type="button" class="copy btn multipleTransformBtn deleteBtn" onclick="deleteWinnerInList()">將中獎者從抽獎名單刪除</button>
           </div>
           <div class="col-6">
-            <button type="button" class="copy btn multipleTransformBtn" style="border-radius: 0px 0px 7px 0px;" onclick="copy('winner')">複製中獎者名單(除去號碼)</button>
+            <button type="button" class="copy btn multipleTransformBtn winnerCopy" onclick="copy('winner')">複製中獎者名單(除去號碼)</button>
           </div>
         </div>
       </div>
@@ -511,6 +530,8 @@
       nowPlaying = true
       playAnimation()
       let drawList = getDrawList()
+      console.log('目前打亂的抽獎名單');
+      console.log(drawList);
       let http = `https://www.random.org/integers/?num=1&min=1&max=${drawList.length}&col=1&base=10&format=plain&rnd=new`
       if (winnerMode === 'edit') {
         toastr.error('請先儲存中獎者名單')
@@ -526,6 +547,8 @@
                 text = '海豹生日快樂~生日大快樂!!!'
               }
               else{
+                console.log('抽到幾號 (對應到抽獎名單的相對位置)');
+                console.log(data-1);
                 text = drawList[data-1]
                 setWinnerList(drawList[data-1])
               }
@@ -819,7 +842,6 @@
           numberPosition = ! numberPosition
           newWinnerList.push(separate[i])
           winnerNames.push(separate[i])
-          console.log('遇到====');
           count = 0
         }
       }
@@ -828,25 +850,33 @@
     } else {
       winnerList = [`=====${nowAward}=====`]
       winnerNames = [`=====${nowAward}=====`]
+      drawAmount = 0
     }
     renewWinnerForm()
   }
 
   //刪除中獎的那些資料
   function deleteWinnerInList() {
+    console.log('aaaaaaaaaaaaaaaaaaa');
     if(winnerMode === 'read'){
       if(nowMode === 'auto'){
         let data = ''
         let form = document.querySelector('.multipleTransform.auto')
         if (form.value) {
           let array = form.value.trim().split(/\s+/)
+          console.log(winnerNames);
+          console.log(array);
           for (let i = 0; i < array.length; i+=2) {
             if (!winnerNames.includes(`${array[i+1]}`)) {
+              console.log(array[i+1]);
               data = data + `${array[i]} ${array[i+1]}\n`
             }
           }
+          console.log(data);
           if (data !== '') {
             form.innerHTML = data
+          } else {
+            form.innerHTML = ''
           }
         }
       }
@@ -854,9 +884,5 @@
       toastr.error('請先儲存中獎者名單')
     }
   }
-  
-  
-          
-          
 </script>
 </html>
