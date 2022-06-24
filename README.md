@@ -9,14 +9,18 @@
 - 刪除抽中的"那個人"所有的票
 - 複製中獎者名單，並自動扣除編號
 
-## 轉換excel或試算表名單
+## 轉換excel或試算表名單 
 (格式為 名字 數字)
 ![image](https://user-images.githubusercontent.com/89585478/175459145-32d5172d-f790-40a6-a102-ea23317ec736.png)
-
 
 ## 不同的獎項
 若要依不同獎項進行分別，請一定要輸入獎項名稱，當名稱有更變時會自動判定成新的獎項
 ![image](https://user-images.githubusercontent.com/89585478/175459199-179398bb-41bf-49ca-ac86-97c3fa2190c9.png)
+
+## 編輯中獎名單
+按下中獎名單右上角的圖案後會變成勾勾的圖示，代表進入了編輯的模式
+要記得再按一次儲存，不然其他功能沒有辦法使用喔!
+![image](https://user-images.githubusercontent.com/89585478/175461158-853b4a90-2d72-44ce-b5ca-3b5e66b163ed.png)
 
 ## 按F12 開啟Console 可以看到打散的名單，以及隨機出來的數字
 ![image](https://user-images.githubusercontent.com/89585478/175459466-c205e887-91cc-4348-9042-54b76d5a2b31.png)
