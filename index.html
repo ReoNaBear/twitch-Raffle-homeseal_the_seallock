@@ -728,7 +728,6 @@
     if(!!excelData.trim()) {
       let seperate = excelData.trim().split(/\s+/)
       let complicateData = seperate
-      console.log(seperate);
       seperate.forEach((e,index) => {
         if(e.split("")[0] == '('){
           complicateData[index-1] = complicateData[index-1] + e
