@@ -684,11 +684,26 @@
   function makeDrawList(array,index) {
     let finalData = ''
     let drawList = []
+    let position = false
     if (array[0] !== '') {
       if(index === 1){
-        for (let i = 0; i < array.length; i+=2) {
-          for (let j = 1; j <= array[i+1]; j++) {
-            finalData = finalData + `${j} ${array[i]}\n`
+        for (let i = 0; i < array.length; i++) {
+          if (!position && (i === 0 || i % 2 === 0) ) {
+            if (!isNaN(Number(array[i+1]))) {
+              for (let j = 1; j <= array[i+1]; j++) {
+                finalData = finalData + `${j} ${array[i]}\n`
+              }
+            } else {
+              position = true
+            }
+          } else if (position && i % 2 === 1) {
+            if (!isNaN(Number(array[i+1]))) {
+              for (let j = 1; j <= array[i+1]; j++) {
+                finalData = finalData + `${j} ${array[i]}\n`
+              }
+            } else {
+              position = false
+            }
           }
         }
         return finalData
@@ -713,7 +728,7 @@
     if(!!excelData.trim()) {
       let seperate = excelData.trim().split(/\s+/)
       let complicateData = seperate
-    
+      console.log(seperate);
       seperate.forEach((e,index) => {
         if(e.split("")[0] == '('){
           complicateData[index-1] = complicateData[index-1] + e
@@ -813,7 +828,6 @@
       winnerNames = []
       for (let i = 0; i < separate.length; i++) {
         if (!separate[i].includes('=====')) {
-          
           if (numberPosition && ( i === 0 || i%2 === 0 )) {
             if (!isNaN(Number(separate[i]))) {
               count = count + 1
