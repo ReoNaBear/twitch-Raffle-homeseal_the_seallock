@@ -512,7 +512,7 @@
   })
 
   // 初始抽獎動畫
-  let text = '還不快來慶祝海豹生日!!!';  // The message displayed
+  let text = '還不快來參加海豹抽獎!!!';  // The message displayed
   let chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890() ';  // All possible Charactrers
   let scale = 40;  // Font size and overall scale
   let breaks = 0.003;  // Speed loss per frame
@@ -546,7 +546,7 @@
             .then(data => {
               if(!data){
                 toastr.error('請先輸入抽獎者名單')
-                text = '海豹生日快樂~生日大快樂!!!'
+                text = '海豹祝大家聖誕快樂!!!'
               }
               else{
                 console.log('抽到幾號 (對應到抽獎名單的相對位置)');
@@ -562,7 +562,7 @@
             setWinnerList(drawList[0])
             } else {
               toastr.error('請輸入抽獎名單或所有參與者皆已中獎')
-              text = '海豹生日快樂~生日大快樂!!!'
+              text = '海豹祝大家聖誕快樂!!!'
             }
             drawAnimationDetail(text)
           }
@@ -872,7 +872,6 @@
 
   //刪除中獎的那些資料
   function deleteWinnerInList() {
-    console.log('aaaaaaaaaaaaaaaaaaa');
     if(winnerMode === 'read'){
       if(nowMode === 'auto'){
         let data = ''
